@@ -1,6 +1,7 @@
 //Bibliotecas
 #include <LiquidCrystal_I2C.h> 
 #include <Wire.h>
+#include <HCSR04.h>
 
 //Configura I2C
 #define endereco   0x27
@@ -10,7 +11,10 @@
 //Chamada do display
 LiquidCrystal_I2C lcd (endereco, colunas, linhas);
 
-bool umidade(int estado);
+//Chamada dos sensores
+int umidade(int estado);
+UltraSonicDistanceSensor distanceSensor1(13, 12);
+
 
 void setup() {
 
@@ -34,8 +38,9 @@ void loop() {
   
     int retorno_umisolo, estado;
     
-    retorno_umisolo =  umidade(estado);
 
+    retorno_umisolo =  umidade(estado);
+    distancia();
   //Solo seco - nível alto no sensor
   if (retorno_umisolo == 1){
     lcd.print("BOMBA LIGADA:");
@@ -55,10 +60,12 @@ void loop() {
     digitalWrite(5, LOW);
     }
     lcd.clear();
+
+
 }
 
   //Leitura do sensor e retorno
-  bool umidade(int estado){
+  int umidade(int estado){
 
     int leitura;
 
@@ -69,4 +76,25 @@ void loop() {
 
         return leitura;
   
+  }
+
+  //Medição de nível de água - Display HCS04 
+  void distancia(){
+    float sensor, altura;
+    sensor = (distanceSensor1.measureDistanceCm());
+
+    altura = 10 - sensor;
+
+  if (altura < 3){
+      digitalWrite(6, HIGH);
+      delay(200);
+      digitalWrite(6, LOW);
+      delay(100);
+      Serial.println("ATENÇÃO NIVEL DE ÁGUA ABAIXO -> BOMBA DESLIGADA");
+    }
+    else{
+            Serial.println("NÍVEL DE ÁGUA NORMAL -> BOMBA LIBERADA PARA USO");
+            digitalWrite(6, HIGH);
+    }
+    
   }
