@@ -1,5 +1,5 @@
 # Estufa_Inteligente_Arduino_UPX2
 Estufa inteligente controlada remotamente por diversos sensores, que monitoram e acionam a irrigação quando necessário. A água utilizada é proveniente da chuva.
 
-## Bliblioteca utilzadas
+## Biblioteca utilzadas
 - [LiquidCrystal_I2C](https://github.com/canalBrincandoComIdeias/Q0624.git)
