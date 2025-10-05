@@ -3,3 +3,4 @@ Estufa inteligente controlada remotamente por diversos sensores, que monitoram e
 
 ## Biblioteca utilzadas
 - [LiquidCrystal_I2C](https://github.com/canalBrincandoComIdeias/Q0624.git)
+- [HCSR04](https://github.com/Martinsos/arduino-lib-hc-sr04.git)
